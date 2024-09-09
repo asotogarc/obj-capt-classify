@@ -1,13 +1,14 @@
 import streamlit as st
 
-# Ocultar el footer de Streamlit
+# Ocultar la cabecera y el pie de página
 hide_st_style = """
             <style>
             #MainMenu {visibility: hidden;}
             footer {visibility: hidden;}
+            header {visibility: hidden;}
             </style>
             """
-st.markdown(hide_st_style, unsafe_allow_html=True) 
+st.markdown(hide_st_style, unsafe_allow_html=True)
 
-# Tu contenido de la aplicación
-st.write('hi')
+# Mostrar "Hi"
+st.write("Hi")
