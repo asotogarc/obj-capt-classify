@@ -2,3 +2,4 @@ pypdf
 openpyxl
 openai
 plotly
+streamlit-webrtc
