@@ -1,5 +1,3 @@
-import streamlit as st
-
 hide_st_style = """
             <style>
             #MainMenu {visibility: hidden;}
@@ -8,6 +6,3 @@ hide_st_style = """
             </style>
             """
 st.markdown(hide_st_style, unsafe_allow_html=True)
-
-# Tu contenido de la aplicación
-st.write('hih')
