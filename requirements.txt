@@ -3,3 +3,4 @@ openpyxl
 openai
 plotly
 streamlit-webrtc
+cv2
