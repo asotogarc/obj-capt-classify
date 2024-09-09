@@ -1,5 +1,1 @@
-pypdf
-openpyxl
-openai
-plotly
 cv2
