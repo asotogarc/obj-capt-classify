@@ -1,31 +1,23 @@
 import streamlit as st
 
-st.title("Webcam Live Feed")
 
-run = st.checkbox('Run')
-FRAME_WINDOW = st.image([])
+def main():
+    st.title("Aplicación de Webcam con Streamlit")
 
-def init_camera():
-    return cv2.VideoCapture(0)
+    # Usar st.camera_input para capturar imágenes de la webcam
+    img_file_buffer = st.camera_input("Toma una foto")
 
-camera = None
+    if img_file_buffer is not None:
+        # Convertir la imagen a un array de numpy
+        img = Image.open(img_file_buffer)
+        img_array = np.array(img)
 
-if run:
-    camera = init_camera()
-    
-    if not camera.isOpened():
-        st.error("No se pudo acceder a la cámara. Por favor, verifica tu conexión.")
-    else:
-        while run:
-            ret, frame = camera.read()
-            if ret:
-                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                FRAME_WINDOW.image(frame)
-            else:
-                st.error("Error al leer el frame de la cámara.")
-                break
-else:
-    st.write('Cámara detenida')
+        # Mostrar la imagen capturada
+        st.image(img_array, caption="Imagen Capturada", use_column_width=True)
 
-if camera is not None:
-    camera.release()
+        # Mostrar información sobre la imagen
+        st.write("Tipo de dato de la imagen:", type(img_array))
+        st.write("Forma de la imagen:", img_array.shape)
+
+if __name__ == "__main__":
+    main()
