@@ -1,4 +1,5 @@
 import streamlit as st
+import io
 
 def main():
     st.title("Aplicación de Webcam con Streamlit")
