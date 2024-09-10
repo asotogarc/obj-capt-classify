@@ -4,6 +4,7 @@ from PIL import Image
 import numpy as np
 import io
 import requests
+import cv2
 from typing import Dict, List, Tuple
 
 # Función para descargar el modelo
@@ -21,7 +22,7 @@ def download_model(url: str) -> str:
 # Función para cargar el modelo
 @st.cache_resource
 def load_model(model_path: str) -> torch.nn.Module:
-    model = fasterrcnn_resnet50_fpn_v2(weights=FasterRCNN_ResNet50_FPN_V2_Weights.DEFAULT)
+    model = fasterrcnn_resnet50_fpn(pretrained=False)
     model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
     model.eval()
     return model
@@ -43,7 +44,7 @@ def draw_boxes(image: np.ndarray, boxes: torch.Tensor, labels: torch.Tensor, sco
         if score > 0.5:
             x1, y1, x2, y2 = box.tolist()
             cv2.rectangle(image, (int(x1), int(y1)), (int(x2), int(y2)), (255, 0, 0), 2)
-            cv2.putText(image, f"{label}: {score:.2f}", (int(x1), int(y1) - 10),
+            cv2.putText(image, f"Object: {score:.2f}", (int(x1), int(y1) - 10),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 0, 0), 2)
     return image
 
@@ -73,7 +74,8 @@ def main():
             predictions, input_tensor = detect_objects(model, img)
             
             # Dibujar las cajas delimitadoras
-            img_with_boxes = draw_boxes(np.array(img), predictions['boxes'], predictions['labels'], predictions['scores'])
+            img_np = np.array(img)
+            img_with_boxes = draw_boxes(img_np, predictions['boxes'], predictions['labels'], predictions['scores'])
             
             # Mostrar la imagen con las detecciones
             st.image(img_with_boxes, caption="Detecciones de Objetos", use_column_width=True)
