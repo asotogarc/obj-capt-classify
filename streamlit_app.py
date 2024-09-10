@@ -1,6 +1,5 @@
 import streamlit as st
 import torch
-from torchvision.models.detection import fasterrcnn_resnet50_fpn_v2, FasterRCNN_ResNet50_FPN_V2_Weights
 from torchvision.transforms import functional as F
 from PIL import Image
 import numpy as np
